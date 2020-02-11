@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Delsur Verificación</string>
+    <string name="formulario_de_verificacion_titulo_string">FORMULARIO DE VERIFICACIÓN DE INSTALACIÓN</string>
+    <string name="departamento_de_tecnologia_subtitulo_string">DEPARTAMENTO DE TECNOLOGÍA COMERCIAL</string>
+    <string name="nombre_de_cliente_string">Nombre de Cliente:</string>
+    <string name="contrato_string">Contrato:</string>
+    <string name="tarifa_string">Tarifa:</string>
+    <string name="numero_aviso_string">N° OT/Aviso:</string>
+    <string name="direccion_string">Dirección:</string>
+    <string name="serie_medidor_string">Serie Medidor:</string>
+    <string name="marca_medidor_string">Marca Medidor</string>
+    <string name="modelo_medidor_string">Modelo Medidor</string>
+    <string name="seleccionar_string">Seleccionar</string>
+    <string name="tipificacion_de_irregularidad_string">Tipificación de Irregularidad:</string>
+    <string name="tipificacion_externa_string">Tipificación Externa:</string>
+    <string name="tipificacion_interna_string">Tipificación Interna:</string>
+    <string name="observaciones_string">Observaciones:</string>
+    <string name="recomendaciones_string">Recomendaciones:</string>
+    <string name="persona_que_atendio_string">Nombre Persona que Atendió:</string>
+    <string name="codigo_verificador_string">Código Verificador</string>
+    <string name="fecha_visita_string">Fecha de Visita</string>
+
+    <string-array name="string_tarifas">
+        <item>"E_1G"</item>
+        <item>E_GMH</item>
+    </string-array>
+</resources>
