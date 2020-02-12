@@ -21,6 +21,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        seleccionar_tarifa_boton.setOnClickListener {
+            val dialogFragment = TarifaDialogFragment()
+            dialogFragment.show(supportFragmentManager, "tarifaDialogFragment")
+        }
     }
 
     fun hideSoftKeyboard(view: View?) {

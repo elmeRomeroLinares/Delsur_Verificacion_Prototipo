@@ -19,6 +19,7 @@
     <string name="persona_que_atendio_string">Nombre Persona que Atendió:</string>
     <string name="codigo_verificador_string">Código Verificador</string>
     <string name="fecha_visita_string">Fecha de Visita</string>
+    <string name="cancelar_string">Cancelar</string>
 
     <string-array name="string_tarifas">
         <item>"E_1G"</item>

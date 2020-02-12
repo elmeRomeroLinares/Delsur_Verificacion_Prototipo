@@ -3,33 +3,44 @@ package com.example.delsurverificacin
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.item_seleccion_tarifa_rv.view.*
 
 class DialogFragmentRecyclerViewAdapter(
     private var dataForRecycler: List<String>,
-    private val listener: (String) -> Unit): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private val tarifaListener: OnTarifaItemClick
+) : RecyclerView.Adapter<RadioButtonViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return RadioButtonViewHolder(LayoutInflater
-            .from(parent.context)
-            .inflate(R.layout.item_seleccion_tarifa_rv, parent, false))
+   var ultimaTarifaSeleccionada: String = "none"
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RadioButtonViewHolder {
+        return RadioButtonViewHolder(
+            LayoutInflater
+                .from(parent.context)
+                .inflate(R.layout.item_seleccion_tarifa_rv, parent, false)
+        )
     }
 
     override fun getItemCount() = dataForRecycler.size
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val radioButtonViewHolder = holder as RadioButtonViewHolder
-        radioButtonViewHolder.bindItemView(dataForRecycler[position], listener)
+    override fun onBindViewHolder(holder: RadioButtonViewHolder, position: Int) {
+        holder.individualRadioButton.text = dataForRecycler[position]
+        holder.individualRadioButton.isChecked =
+            (ultimaTarifaSeleccionada == dataForRecycler[position])
     }
 }
 
-class RadioButtonViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-    fun bindItemView(tipoDeTarifa: String, listener: (String) -> Unit) {
-        itemView.tarifaRadioButton.text = tipoDeTarifa
+class RadioButtonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    val individualRadioButton: RadioButton =
+        itemView.findViewById(R.id.tarifaRadioButton) as RadioButton
 
-        itemView.setOnClickListener {
-            listener(tipoDeTarifa)
+    init {
+        individualRadioButton.setOnClickListener {
+
         }
     }
+}
+
+interface OnTarifaItemClick {
+    fun onTarifaItemClick(tarifaSeleccionada: String)
 }
