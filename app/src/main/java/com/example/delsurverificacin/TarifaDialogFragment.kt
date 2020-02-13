@@ -12,6 +12,10 @@ import androidx.recyclerview.widget.RecyclerView
 
 class TarifaDialogFragment: DialogFragment(), OnTarifaItemClick {
 
+    val data = Repository().getTarifasStringArray()
+    val dialogFragmentRecyclerViewAdapter =
+        DialogFragmentRecyclerViewAdapter(data, this)
+
     companion object {
         lateinit var seleccionActual: String
     }
@@ -46,9 +50,6 @@ class TarifaDialogFragment: DialogFragment(), OnTarifaItemClick {
 
         dialogFragmentSelectButton.setOnClickListener {
             // pasar seleccion a actividad.
-            seleccionActual.let{
-                Log.d("Dialog Fragment", it)
-            }
             dismiss()
         }
 
@@ -56,16 +57,16 @@ class TarifaDialogFragment: DialogFragment(), OnTarifaItemClick {
     }
 
     fun initRecyclerView(recyclerView: RecyclerView) {
-        val data = Repository().getTarifasStringArray()
 
         recyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-        recyclerView.adapter = DialogFragmentRecyclerViewAdapter(data, this)
+        recyclerView.adapter = dialogFragmentRecyclerViewAdapter
     }
 
     override fun onTarifaItemClick(tarifaSeleccionada: String) {
         seleccionActual = tarifaSeleccionada
+        dialogFragmentRecyclerViewAdapter.actualizarRecyclerAdapter(seleccionActual)
         Log.d("Dialog Fragment", tarifaSeleccionada)
     }
 

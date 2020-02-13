@@ -27,17 +27,34 @@ class DialogFragmentRecyclerViewAdapter(
         holder.individualRadioButton.text = dataForRecycler[position]
         holder.individualRadioButton.isChecked =
             (ultimaTarifaSeleccionada == dataForRecycler[position])
+
+        holder.bindData(tarifaListener, dataForRecycler[position])
     }
+
+    fun actualizarRecyclerAdapter(tarifaSeleccionada: String) {
+        ultimaTarifaSeleccionada = tarifaSeleccionada
+        notifyDataSetChanged()
+    }
+
+
 }
 
 class RadioButtonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val individualRadioButton: RadioButton =
         itemView.findViewById(R.id.tarifaRadioButton) as RadioButton
 
+    lateinit var listener: OnTarifaItemClick
+    lateinit var tarifaSeleccionada: String
+
     init {
         individualRadioButton.setOnClickListener {
-
+            listener.onTarifaItemClick(tarifaSeleccionada)
         }
+    }
+
+    fun bindData(tarifaItemClick: OnTarifaItemClick, tarifa: String) {
+        listener = tarifaItemClick
+        tarifaSeleccionada = tarifa
     }
 }
 
