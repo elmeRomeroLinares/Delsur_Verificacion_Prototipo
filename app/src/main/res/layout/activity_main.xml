@@ -81,13 +81,24 @@
             app:layout_constraintTop_toBottomOf="@+id/contrato_tv" />
 
         <Button
-            android:id="@+id/seleccionar_tarifa_boton"
+            android:id="@+id/tarifa_selection_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/tarifa_string"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/contrato_edit_text" />
+
+        <TextView
+            android:id="@+id/tarifa_selected_TV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:layout_constraintTop_toTopOf="@+id/tarifa_selection_button"
+            app:layout_constraintBottom_toBottomOf="@+id/tarifa_selection_button"
+            app:layout_constraintStart_toEndOf="@+id/tarifa_selection_button"
+            android:textStyle="italic"
+            android:visibility="invisible"/>
 
         <TextView
             android:id="@+id/numero_de_aviso_tv"
@@ -98,7 +109,7 @@
             android:text="@string/numero_aviso_string"
             android:textColor="@android:color/black"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/seleccionar_tarifa_boton" />
+            app:layout_constraintTop_toBottomOf="@+id/tarifa_selection_button" />
 
         <EditText
             android:id="@+id/numero_de_aviso_edit_text"
@@ -154,26 +165,44 @@
             app:layout_constraintTop_toBottomOf="@+id/serie_medidor_tv" />
 
         <Button
-            android:id="@+id/seleccionar_marca_medidor_boton"
+            android:id="@+id/marca_medidor_selection_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/marca_medidor_string"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.15"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/serie_medidor_edit_text" />
 
+        <TextView
+            android:id="@+id/marca_medidor_TV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:layout_constraintTop_toTopOf="@+id/marca_medidor_selection_button"
+            app:layout_constraintBottom_toBottomOf="@+id/marca_medidor_selection_button"
+            app:layout_constraintStart_toEndOf="@+id/marca_medidor_selection_button"
+            android:textStyle="italic"
+            android:visibility="invisible" />
+
         <Button
-            android:id="@+id/seleccionar_modelo_medidor_boton"
+            android:id="@+id/modelo_medidor_selection_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/modelo_medidor_string"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.85"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/serie_medidor_edit_text" />
+            app:layout_constraintTop_toBottomOf="@+id/marca_medidor_selection_button" />
+
+        <TextView
+            android:id="@+id/modelo_medidor_TV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:layout_constraintTop_toTopOf="@+id/modelo_medidor_selection_button"
+            app:layout_constraintBottom_toBottomOf="@+id/modelo_medidor_selection_button"
+            app:layout_constraintStart_toEndOf="@+id/modelo_medidor_selection_button"
+            android:textStyle="italic"
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/tipificacion_de_irregularidad_tv"
@@ -185,7 +214,7 @@
             android:textColor="@android:color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/seleccionar_modelo_medidor_boton" />
+            app:layout_constraintTop_toBottomOf="@+id/modelo_medidor_selection_button" />
 
         <TextView
             android:id="@+id/tipificacion_externa_tv"
@@ -197,11 +226,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tipificacion_de_irregularidad_tv" />
 
-        <FrameLayout
-            android:id="@+id/temporary_frame_layout"
-            android:layout_width="250dp"
-            android:layout_height="100dp"
-            android:background="@color/colorAccent"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/irregularidad_externa_recycler_view"
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="175dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tipificacion_externa_tv" />
 
@@ -213,13 +242,13 @@
             android:text="@string/tipificacion_interna_string"
             android:textColor="@android:color/black"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/temporary_frame_layout" />
+            app:layout_constraintTop_toBottomOf="@+id/irregularidad_externa_recycler_view" />
 
-        <FrameLayout
-            android:id="@+id/temporary_frame_layout_2"
-            android:layout_width="250dp"
-            android:layout_height="100dp"
-            android:background="@color/colorAccent"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/irregularidad_interna_recycler_view"
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="175dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tipificacion_interna_tv" />
 
@@ -232,7 +261,7 @@
             android:text="@string/observaciones_string"
             android:textColor="@android:color/black"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/temporary_frame_layout_2" />
+            app:layout_constraintTop_toBottomOf="@+id/irregularidad_interna_recycler_view" />
 
         <EditText
             android:id="@+id/observaciones_edit_text"

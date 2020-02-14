@@ -7,11 +7,12 @@ import android.widget.RadioButton
 import androidx.recyclerview.widget.RecyclerView
 
 class DialogFragmentRecyclerViewAdapter(
-    private var dataForRecycler: List<String>,
-    private val tarifaListener: OnTarifaItemClick
+    private val tarifaListener: OnRecyclerViewItemClick
 ) : RecyclerView.Adapter<RadioButtonViewHolder>() {
 
-   var ultimaTarifaSeleccionada: String = "none"
+    lateinit var dataForRecycler: List<String>
+
+    var ultimaTarifaSeleccionada: String = "none"
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RadioButtonViewHolder {
         return RadioButtonViewHolder(
@@ -31,8 +32,9 @@ class DialogFragmentRecyclerViewAdapter(
         holder.bindData(tarifaListener, dataForRecycler[position])
     }
 
-    fun actualizarRecyclerAdapter(tarifaSeleccionada: String) {
+    fun actualizarRecyclerAdapter(tarifaSeleccionada: String, data: List<String>) {
         ultimaTarifaSeleccionada = tarifaSeleccionada
+        dataForRecycler = data
         notifyDataSetChanged()
     }
 
@@ -43,21 +45,21 @@ class RadioButtonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
     val individualRadioButton: RadioButton =
         itemView.findViewById(R.id.tarifaRadioButton) as RadioButton
 
-    lateinit var listener: OnTarifaItemClick
+    lateinit var listener: OnRecyclerViewItemClick
     lateinit var tarifaSeleccionada: String
 
     init {
         individualRadioButton.setOnClickListener {
-            listener.onTarifaItemClick(tarifaSeleccionada)
+            listener.onSelectedItemClick(tarifaSeleccionada)
         }
     }
 
-    fun bindData(tarifaItemClick: OnTarifaItemClick, tarifa: String) {
+    fun bindData(tarifaItemClick: OnRecyclerViewItemClick, tarifa: String) {
         listener = tarifaItemClick
         tarifaSeleccionada = tarifa
     }
 }
 
-interface OnTarifaItemClick {
-    fun onTarifaItemClick(tarifaSeleccionada: String)
+interface OnRecyclerViewItemClick {
+    fun onSelectedItemClick(optionSelected: String)
 }
