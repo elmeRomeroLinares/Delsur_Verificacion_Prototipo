@@ -12,7 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 
 class SelectionDialogFragment(
     val tarifaSelectedListener: TarifaSelectedInterface,
-    val marcaMedidorSelectedListener: MarcaMedidorSelectedInterface
+    val marcaMedidorSelectedListener: MarcaMedidorSelectedInterface,
+    val modeloMedidorSelectedListener: ModeloMedidorSelectedInterface
 ) : DialogFragment(), OnRecyclerViewItemClick {
 
     var fragmentInitializerButton: String? = " "
@@ -40,7 +41,9 @@ class SelectionDialogFragment(
             MARCA_MEDIDOR_DIALOG_FRAGMENT -> data = Repository().getMarcaMedidorStringList()
             MODELO_MEDIDOR_DIALOG_FRAGMENT -> {
                 // Filtrar con la variable marcaCurrentSelection la siguiente lista
-                data = Repository().getModelosMedidores()
+                data = Repository().getModelosMedidores().filter {
+                    it.contains(marcaCurrentSelection.toString())
+                }
             }
         }
 
@@ -70,6 +73,8 @@ class SelectionDialogFragment(
                 tarifaSelectedListener.tarifaSelectedInterface(seleccionActual)
             } else if (fragmentInitializerButton == MARCA_MEDIDOR_DIALOG_FRAGMENT) {
                 marcaMedidorSelectedListener.marcaMedidorSelectedInterface(seleccionActual)
+            } else {
+                modeloMedidorSelectedListener.modeloMedidorSelectedInterface(seleccionActual)
             }
             dismiss()
         }

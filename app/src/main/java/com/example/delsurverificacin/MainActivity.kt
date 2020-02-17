@@ -24,7 +24,10 @@ class MainActivity : AppCompatActivity(),
     OnInternaRecyclerViewItemClick,
     OnExternaRecyclerViewItemClick{
 
-    private val dialogFragment = SelectionDialogFragment(this, this)
+    private val dialogFragment = SelectionDialogFragment(
+        this,
+        this,
+        this)
     private val keysForDialogFragmentBundle = Bundle()
     lateinit var tarifaCurrentSelection: String
     lateinit var marcaMedidorCurrentSelection: String
