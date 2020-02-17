@@ -16,6 +16,7 @@ class SelectionDialogFragment(
 ) : DialogFragment(), OnRecyclerViewItemClick {
 
     var fragmentInitializerButton: String? = " "
+    var marcaCurrentSelection: String? = ""
     private lateinit var data: List<String>
     val dialogFragmentRecyclerViewAdapter =
         DialogFragmentRecyclerViewAdapter(this)
@@ -31,10 +32,16 @@ class SelectionDialogFragment(
     ): View? {
 
         fragmentInitializerButton = arguments?.getString(FRAGMENT_KEY)
+        marcaCurrentSelection = arguments?.getString(CURRENT_MARCA_MEDIDOR)
+
 
         when(fragmentInitializerButton) {
             TARIFA_SELECT_DIALOG_FRAGMENT -> data = Repository().getTarifasStringList()
             MARCA_MEDIDOR_DIALOG_FRAGMENT -> data = Repository().getMarcaMedidorStringList()
+            MODELO_MEDIDOR_DIALOG_FRAGMENT -> {
+                // Filtrar con la variable marcaCurrentSelection la siguiente lista
+                data = Repository().getModelosMedidores()
+            }
         }
 
         val rootView: View = inflater.inflate(
@@ -92,4 +99,8 @@ interface TarifaSelectedInterface {
 
 interface MarcaMedidorSelectedInterface {
     fun marcaMedidorSelectedInterface(marcaMedidorSelected: String)
+}
+
+interface ModeloMedidorSelectedInterface {
+    fun modeloMedidorSelectedInterface(modeloMedidorSelected: String)
 }

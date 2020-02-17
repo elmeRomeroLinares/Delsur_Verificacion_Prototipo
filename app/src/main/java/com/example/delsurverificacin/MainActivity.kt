@@ -13,21 +13,28 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 const val TARIFA_SELECT_DIALOG_FRAGMENT = "tarifa_dialog_fragment"
 const val MARCA_MEDIDOR_DIALOG_FRAGMENT = "marca_medidor_dialog_fragment"
+const val CURRENT_MARCA_MEDIDOR = "marca_seleccionada"
 const val MODELO_MEDIDOR_DIALOG_FRAGMENT = "modelo_medidor_dialog_fragment"
 const val FRAGMENT_KEY = "fragment_key"
 
-class MainActivity : AppCompatActivity(), TarifaSelectedInterface,
-    MarcaMedidorSelectedInterface, OnRecyclerViewItemClick, OnInternaRecyclerViewItemClick{
+class MainActivity : AppCompatActivity(),
+    TarifaSelectedInterface,
+    MarcaMedidorSelectedInterface,
+    ModeloMedidorSelectedInterface,
+    OnInternaRecyclerViewItemClick,
+    OnExternaRecyclerViewItemClick{
 
     private val dialogFragment = SelectionDialogFragment(this, this)
     private val keysForDialogFragmentBundle = Bundle()
     lateinit var tarifaCurrentSelection: String
     lateinit var marcaMedidorCurrentSelection: String
-    lateinit var irregularidadExternaCurrentSelection: String
+    lateinit var modeloMedidorCurrentSelection: String
+    val irregularidadExternaCurrentSelection = mutableListOf<String>()
     val irregularidadInternaCurrentSelections = mutableListOf<String>()
     lateinit var tarifaSelectedTV: TextView
     lateinit var marcaMedidorTV: TextView
-    lateinit var externaRecyclerViewAdapter: DialogFragmentRecyclerViewAdapter
+    lateinit var modeloMedidorTV: TextView
+    lateinit var externaRecyclerViewAdapter: TipificacionExternaRecyclerViewAdapter
     lateinit var internaRecyclerViewAdapter: TipificacionInternaRecyclerViewAdapter
     val dataForExternaRecyclerView = Repository().getIrregularidadesExternasStringList()
     val dataForInternaRecyclerView = Repository().getIrregularidadInternaStringList()
@@ -50,8 +57,16 @@ class MainActivity : AppCompatActivity(), TarifaSelectedInterface,
             dialogFragment.show(supportFragmentManager, MARCA_MEDIDOR_DIALOG_FRAGMENT)
         }
 
+        modelo_medidor_selection_button.setOnClickListener {
+            keysForDialogFragmentBundle.putString(FRAGMENT_KEY, MODELO_MEDIDOR_DIALOG_FRAGMENT)
+            keysForDialogFragmentBundle.putString(CURRENT_MARCA_MEDIDOR, marcaMedidorCurrentSelection)
+            dialogFragment.arguments = keysForDialogFragmentBundle
+            dialogFragment.show(supportFragmentManager, MODELO_MEDIDOR_DIALOG_FRAGMENT)
+        }
+
         tarifaSelectedTV = tarifa_selected_TV
         marcaMedidorTV = marca_medidor_TV
+        modeloMedidorTV = modelo_medidor_TV
 
         initIrregularidadExternaRecyclerView(irregularidad_externa_recycler_view)
 
@@ -59,8 +74,10 @@ class MainActivity : AppCompatActivity(), TarifaSelectedInterface,
     }
 
     fun initIrregularidadExternaRecyclerView(tipificacionExternaRV: RecyclerView) {
-        externaRecyclerViewAdapter = DialogFragmentRecyclerViewAdapter(this)
-        externaRecyclerViewAdapter.actualizarRecyclerAdapter("none", dataForExternaRecyclerView)
+        externaRecyclerViewAdapter = TipificacionExternaRecyclerViewAdapter(this)
+        externaRecyclerViewAdapter.actualizarRecyclerAdapter(
+            irregularidadExternaCurrentSelection.toList(),
+            dataForExternaRecyclerView)
 
         tipificacionExternaRV.layoutManager =
             GridLayoutManager(this, 3)
@@ -92,16 +109,31 @@ class MainActivity : AppCompatActivity(), TarifaSelectedInterface,
         marcaMedidorTV.visibility = View.VISIBLE
     }
 
-    override fun onSelectedItemClick(optionSelected: String) {
-        irregularidadExternaCurrentSelection = optionSelected
-        externaRecyclerViewAdapter.actualizarRecyclerAdapter(irregularidadExternaCurrentSelection,
-            dataForExternaRecyclerView)
+    override fun modeloMedidorSelectedInterface(modeloMedidorSelected: String){
+        modeloMedidorCurrentSelection = modeloMedidorSelected
+        modeloMedidorTV.text = modeloMedidorCurrentSelection
+        modeloMedidorTV.visibility = View.VISIBLE
     }
 
     override fun onInternaSelectedItemClick(optionSelected: String) {
-        irregularidadInternaCurrentSelections.add(optionSelected)
+        if (irregularidadInternaCurrentSelections.contains(optionSelected)){
+            irregularidadInternaCurrentSelections.remove(optionSelected)
+        } else {
+            irregularidadInternaCurrentSelections.add(optionSelected)
+        }
 
         internaRecyclerViewAdapter.actualizarRecyclerAdapter(irregularidadInternaCurrentSelections.toList(),
             dataForInternaRecyclerView)
+    }
+
+    override fun onExternaSelectedItemClick(optionSelected: String) {
+        if (irregularidadExternaCurrentSelection.contains(optionSelected)) {
+            irregularidadExternaCurrentSelection.remove(optionSelected)
+        } else {
+            irregularidadExternaCurrentSelection.add(optionSelected)
+        }
+
+        externaRecyclerViewAdapter.actualizarRecyclerAdapter(irregularidadExternaCurrentSelection.toList(),
+            dataForExternaRecyclerView)
     }
 }
