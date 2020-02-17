@@ -7,7 +7,7 @@ import android.widget.RadioButton
 import androidx.recyclerview.widget.RecyclerView
 
 class DialogFragmentRecyclerViewAdapter(
-    private val tarifaListener: OnRecyclerViewItemClick
+    private val itemClickListener: OnRecyclerViewItemClick
 ) : RecyclerView.Adapter<RadioButtonViewHolder>() {
 
     lateinit var dataForRecycler: List<String>
@@ -29,7 +29,7 @@ class DialogFragmentRecyclerViewAdapter(
         holder.individualRadioButton.isChecked =
             (ultimaTarifaSeleccionada == dataForRecycler[position])
 
-        holder.bindData(tarifaListener, dataForRecycler[position])
+        holder.bindData(itemClickListener, dataForRecycler[position])
     }
 
     fun actualizarRecyclerAdapter(tarifaSeleccionada: String, data: List<String>) {

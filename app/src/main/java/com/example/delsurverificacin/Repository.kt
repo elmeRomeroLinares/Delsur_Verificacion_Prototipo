@@ -2,6 +2,24 @@ package com.example.delsurverificacin
 
 class Repository {
 
+    fun getIrregularidadesExternasStringList(): List<String> {
+        val irregularidadesExternas = mutableListOf(
+            "Acometida", "Medidor", "Inaccesible", "Fraude", "Condición SE", "Otros Riesgos",
+            "Lectura Negativa", "Consumo Erróneo", "Otros"
+        )
+
+        return irregularidadesExternas
+    }
+
+    fun getIrregularidadInternaStringList(): List<String> {
+        val irregularidadesInternas = mutableListOf(
+            "Instalación Fuera N", "Derivación a tierra", "Equipos Fuera N", "Incremento Carga",
+            "Tarifa incorrecta", "Carga sin Relación"
+        )
+
+        return irregularidadesInternas
+    }
+
     fun getTarifasStringList(): List<String> {
         val tarifasStringArray = mutableListOf(
             "E_1G", "E_GMH", "E_MBP", "E_MMH", "E_MMP", "G_1AP", "G_1G", "G_1GC", "G_GBH",
