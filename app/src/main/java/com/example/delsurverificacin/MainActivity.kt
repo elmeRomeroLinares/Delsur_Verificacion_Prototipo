@@ -36,12 +36,7 @@ class MainActivity : AppCompatActivity(), TarifaSelectedInterface,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        nombre_de_cliente_edit_text.setOnFocusChangeListener { v, hasFocus ->
-            if (!hasFocus) {
-                Log.d("Main Activity", "lose of focus")
-                hideSoftKeyboard(v)
-            }
-        }
+        GlideApp.with(this).load(R.mipmap.ic_launcher).into(logo_delsur_IV)
 
         tarifa_selection_button.setOnClickListener {
             keysForDialogFragmentBundle.putString(FRAGMENT_KEY, TARIFA_SELECT_DIALOG_FRAGMENT)
@@ -83,13 +78,6 @@ class MainActivity : AppCompatActivity(), TarifaSelectedInterface,
             GridLayoutManager(this, 3)
 
         tipificacionInternaRV.adapter = internaRecyclerViewAdapter
-    }
-
-    fun hideSoftKeyboard(view: View?) {
-        view?.apply {
-            val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
-        }
     }
 
     override fun tarifaSelectedInterface(tarifaSelected: String) {
